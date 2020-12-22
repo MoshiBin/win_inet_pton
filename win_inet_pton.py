@@ -3,6 +3,7 @@
 # either in source code form or as a compiled binary, for any purpose,
 # commercial or non-commercial, and by any means.
 
+import errno
 import socket
 import os
 import sys
@@ -74,7 +75,7 @@ def inject_into_socket():
             elif err == 10014:
                 e = OSError("bad address")
             else:
-                e = OSError("unknown error from inet_ntop")
+                e = OSError("unknown error from inet_ntop: %s", errno.errorcode.get(err))
             e.errno = err
             raise e
 
